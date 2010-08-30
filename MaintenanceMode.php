@@ -10,8 +10,8 @@ class MaintenanceMode extends CComponent {
     public $capUrl = 'maintenance/index';
     public $message = "Извините, на сайте ведутся технические работы.";
 
-    public $users = array('admin', );
-    public $roles = array('Administrator', );
+    public $users = array('admin',);
+    public $roles = array('Administrator',);
 
     public $urls = array();
 
@@ -19,15 +19,14 @@ class MaintenanceMode extends CComponent {
 
         if ($this->enabledMode) {
 
-            $disable = array_search(Yii::app()->user->name, $this->users) !== false ? true : false;
-            foreach($this->roles as $role) {
+            $disable = in_array(Yii::app()->user->name, $this->users);
+            foreach ($this->roles as $role) {
                 $disable = $disable || Yii::app()->user->checkAccess($role);
             }
 
-            $disable = array_search(Yii::app()->request->url, $this->urls) !== false ? true : false;
+            $disable = $disable || in_array(Yii::app()->request->url, $this->urls);
 
             if (!$disable) {
-
                 if ($this->capUrl === 'maintenance/index') {
                     Yii::app()->controllerMap['maintenance'] = 'application.extensions.MaintenanceMode.MaintenanceController';
                 }
