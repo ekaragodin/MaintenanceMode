@@ -24,7 +24,7 @@ class MaintenanceMode extends CComponent {
                 $disable = $disable || Yii::app()->user->checkAccess($role);
             }
 
-            $disable = $disable || in_array(Yii::app()->request->url, $this->urls);
+            $disable = $disable || in_array(Yii::app()->request->getPathInfo(), $this->urls);
 
             if (!$disable) {
                 if ($this->capUrl === 'maintenance/index') {
