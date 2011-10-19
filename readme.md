@@ -1,4 +1,3 @@
-
 #Maintenance mode for Yii framework.
 
 ##Install
@@ -26,6 +25,8 @@ Add to config/main.php:
         'users' => array('admin', ),
         // allowed roles
         'roles' => array('Administrator', ),
+        // allowed IP
+        'ips' => array('123.456.789.000', ),        
         // allowed urls
         'urls' => array('/site/login', '/login', ),        
     ),

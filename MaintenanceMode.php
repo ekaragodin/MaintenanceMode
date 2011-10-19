@@ -13,6 +13,8 @@ class MaintenanceMode extends CComponent {
     public $users = array('admin',);
     public $roles = array('Administrator',);
 
+    public $ips = array();//allowed IP
+    
     public $urls = array();
 
     public function init() {
@@ -25,6 +27,8 @@ class MaintenanceMode extends CComponent {
             }
 
             $disable = $disable || in_array(Yii::app()->request->getPathInfo(), $this->urls);
+            
+            $disable = $disable || in_array($this->getIp(), $this->ips);//check "allowed IP"
 
             if (!$disable) {
                 if ($this->capUrl === 'maintenance/index') {
@@ -35,6 +39,21 @@ class MaintenanceMode extends CComponent {
             }
         }
 
+    }
+
+    //get user IP
+    protected function getIp()
+    {
+        $strRemoteIP = $_SERVER['REMOTE_ADDR'];
+        if (!$strRemoteIP) { $strRemoteIP = urldecode(getenv('HTTP_CLIENTIP')); }
+        if (getenv('HTTP_X_FORWARDED_FOR')) { $strIP = getenv('HTTP_X_FORWARDED_FOR'); }
+        elseif (getenv('HTTP_X_FORWARDED')) { $strIP = getenv('HTTP_X_FORWARDED'); }
+        elseif (getenv('HTTP_FORWARDED_FOR')) { $strIP = getenv('HTTP_FORWARDED_FOR'); }
+        elseif (getenv('HTTP_FORWARDED')) { $strIP = getenv('HTTP_FORWARDED'); }
+        else { $strIP = $_SERVER['REMOTE_ADDR']; }
+
+        if ($strRemoteIP != $strIP) { $strIP = $strRemoteIP.", ".$strIP; }
+        return $strIP;
     }
 
 }
