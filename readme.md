@@ -2,6 +2,15 @@
 
 ##Install
 Copy extension to your folder path/to/extensions.
+
+Or add
+
+```
+"ekaragodin/yii-maintenance-mode": "dev-master".
+```
+
+to the require section of your `composer.json` file.
+
 Add to config/main.php:
 
     'preload' => array('log', 'maintenanceMode'),
