@@ -6,7 +6,7 @@ Copy extension to your folder path/to/extensions.
 Or add
 
 ```
-"ekaragodin/yii-maintenance-mode": "dev-master".
+"ekaragodin/yii-maintenance-mode": "dev-master"
 ```
 
 to the require section of your `composer.json` file.
